@@ -1,8 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { UsuarioEntity } from "./usuario.entity";
 import { UsuariosArmazenados } from "./usuario.dm";
 import {v4 as uuid} from 'uuid';
 import { CriaUsuarioDTO } from "./dto/criaUsuario.dto";
+import { ListaUsuarioDTO } from "./dto/listaUsuario.dto";
 
 @Controller('/usuarios')
 export class UsuarioController {
@@ -24,5 +25,19 @@ export class UsuarioController {
             message: 'Usuário criado com sucesso'
         };
         return retorno;
+    }
+
+    @Get()
+    async retonoUsuario (): Promise<ListaUsuarioDTO[]>{
+
+        var usuarioListados = this.Usuarios.Usuarios;
+        const ListaRetorno = usuarioListados.map(
+            usuario => new ListaUsuarioDTO(
+                usuario.id,
+                usuario.nome,
+                usuario.email
+            )
+        );
+        return ListaRetorno;
     }
 }

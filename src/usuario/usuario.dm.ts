@@ -10,7 +10,14 @@ export class UsuariosArmazenados {
         this.#usuarios.push(usuario);
     }
 
-    get Usuarios () {
+
+
+    async validaEmail(email: string): Promise<boolean>{
+        const usuarioEncontrado = this.#usuarios.find (u => u.email === email);
+        return usuarioEncontrado !== undefined;
+    }
+
+    get Usuarios() {
         return this.#usuarios;
     }
 }
