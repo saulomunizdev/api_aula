@@ -1,0 +1,43 @@
+import { IsString, IsNotEmpty, MinLength, IsEmail, IsOptional} from "class-validator";
+
+
+export class AlteraInstituicaoDTO {
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'O nome da instituição não pode ser vazio'})
+    nomeInstituicao: string;
+
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'O nome do responsável não pode ser vazio'})
+    nomeResponsavel: string;
+
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'A cidade não pode ser vazio'})
+    cidade: string;
+
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'O estado não pode ser vazio'})
+    estado: string;
+
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'O telefone não pode ser vazio'})
+    telefone: string;
+
+    @IsEmail(undefined,{message: 'Email inválido'})
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty({message: 'O email não pode ser vazio'})
+    email: string;
+
+    @MinLength(6,{message: 'A senha deve ter no mínimo 6 caracteres'})
+    @IsString()
+    @IsOptional()
+    @IsNotEmpty()
+    senha: string
+
+
+}
