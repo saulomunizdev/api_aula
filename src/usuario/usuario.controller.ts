@@ -4,8 +4,10 @@ import { UsuariosArmazenados } from "./usuario.dm";
 import {v4 as uuid} from 'uuid';
 import { CriaUsuarioDTO } from "./dto/criaUsuario.dto";
 import { ListaUsuarioDTO } from "./dto/listaUsuario.dto";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller('/usuarios')
+@ApiTags('usuario')
 export class UsuarioController {
     constructor(private Usuarios : UsuariosArmazenados){
 

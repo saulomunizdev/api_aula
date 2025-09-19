@@ -5,8 +5,10 @@ import { CriaInstituicaoDTO } from "./dto/criarInstituicao.dto";
 import { instituicaoArmazenados } from "./instituicao.dm";
 import { ListaInstituicaoDTO } from "./dto/listaInstituicao.dto";
 import { AlteraInstituicaoDTO } from "./dto/alteraInstituicao.dto";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller('/instituicao')
+@ApiTags('instituicao')
 export class InstituicaoController {
     constructor(private Instituicao : instituicaoArmazenados){
 
