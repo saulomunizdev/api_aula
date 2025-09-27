@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsNotEmpty, MinLength, IsEmail} from "class-validator";
+import { SenhaForte } from "src/usuario/validacao/strong-pass.validator";
 
 
 export class CriaInstituicaoDTO {
@@ -38,6 +39,7 @@ export class CriaInstituicaoDTO {
     @IsString()
     @IsNotEmpty()
     @ApiProperty({example:'123456', description: 'A senha deve ter no mínimo 6 caracteres'})
+    @SenhaForte({message: 'A senha deve ser mais forte'})
     senha: string
 
 

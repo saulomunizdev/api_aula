@@ -6,6 +6,7 @@ import { instituicaoArmazenados } from "./instituicao.dm";
 import { ListaInstituicaoDTO } from "./dto/listaInstituicao.dto";
 import { AlteraInstituicaoDTO } from "./dto/alteraInstituicao.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { LoginDTO } from "./dto/login.dto";
 
 @Controller('/instituicao')
 @ApiTags('instituicao')
@@ -32,6 +33,21 @@ export class InstituicaoController {
         };
     }
 
+    @Post('/login')
+        async login(@Body() dadosLogin: LoginDTO) {
+        const usuarioLogado = this.Instituicao.loginUsuario(dadosLogin.email, dadosLogin.senha);   
+        if(usuarioLogado){
+            return {
+                usuario: usuarioLogado,
+                message: 'Login realizado com sucesso'
+            };
+        }
+        return {
+            message: 'Email ou senha inválidos'
+        };
+    }  
+
+
 
 
     @Post()
@@ -39,8 +55,6 @@ export class InstituicaoController {
         var novoInstituicao = new instituicaoEntity(uuid(),dadosInstituicao.nomeInstituicao, dadosInstituicao.nomeResponsavel, dadosInstituicao.cidade, dadosInstituicao.estado,
                                                     dadosInstituicao.telefone, dadosInstituicao.email, dadosInstituicao.senha);
 
-      
-        
         this.Instituicao.AdicionarInstituicao(novoInstituicao);
         var retorno = { 
             novoInstituicao,
