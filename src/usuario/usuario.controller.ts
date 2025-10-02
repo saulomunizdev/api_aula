@@ -8,20 +8,31 @@ import { ApiTags } from "@nestjs/swagger";
 import { AlteraUsuarioDTO } from "./dto/AlteraUsuarios.dto";
 import { LoginUsuariosDTO } from "./dto/loginUsuarios.dto";
 import { RetornoPadraoDTO } from "src/dto/retorno.dto";
+import { HttpModule, HttpService } from "@nestjs/axios";
+import { lastValueFrom, map } from "rxjs";
+import { response } from "express";
 
 @Controller('/usuarios')
 @ApiTags('usuario')
 export class UsuarioController {
-    constructor(private Usuarios : UsuariosArmazenados){
+    constructor(private Usuarios : UsuariosArmazenados, private httpService: HttpService){
 
     }
 
     @Post()
     async criaUsuario(@Body() dadosUsuario: CriaUsuarioDTO): Promise <RetornoPadraoDTO> {
+        var retornoCep = await lastValueFrom(this.httpService
+            .get(`https://viacep.com.br/ws/${dadosUsuario.cep}/json/`)
+            .pipe(
+                map((response) => response.data)
+            )
+        )
         try{
-        var novoUsuario = new UsuarioEntity(uuid(),dadosUsuario.nome, dadosUsuario.idade, 
-                                            dadosUsuario.cidade, dadosUsuario.email, 
-                                            dadosUsuario.telefone, dadosUsuario.senha);
+        var novoUsuario = new UsuarioEntity(uuid(),dadosUsuario.nome, dadosUsuario.idade,
+                                            dadosUsuario.cidade, dadosUsuario.email,
+                                            dadosUsuario.telefone, dadosUsuario.senha, retornoCep.endereco, dadosUsuario.complemento, retornoCep.bairro,
+                                            retornoCep.estado, dadosUsuario.cep, retornoCep.localidade
+                                        );
 
         this.Usuarios.AdicionarUsuario(novoUsuario);
         var retorno = new RetornoPadraoDTO( 

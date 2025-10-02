@@ -43,4 +43,18 @@ export class AlteraUsuarioDTO {
     @IsOptional()
     @ApiProperty({example:'(11)999999999', description: 'Telefone do usuario'})
     telefone: string;
+
+    @IsNotEmpty({message: 'complemento não pode ser vazio'})
+    @IsString()
+    @IsOptional()
+    @ApiProperty({example:'casa', description: 'complemento do usuario'})
+    complemento: string;
+
+    @IsNotEmpty({message: 'CEP não pode ser vazio'})
+    @IsString()
+    @IsOptional()
+    @ApiProperty({example:'17030-028', description: 'CEP do usuario'})
+    cep: string;
+
+
 }

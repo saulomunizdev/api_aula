@@ -14,8 +14,17 @@ export class UsuarioEntity{
     email: string;
     telefone: string;
     senha: string;
+    endereco: string;
+    complemento: string;
+    bairro: string;
+    estado: string;
+    cep: string;
+    localidade: string
 
-    constructor(id: string, nome: string, idade: number, cidade: string, email: string, telefone: string,senha: string) {
+
+    constructor(id: string, nome: string, idade: number, cidade: string, email: string, telefone: string,senha: string, endereco: string, complemento: string, bairro: string,
+        estado: string, cep: string, localidade: string
+    ) {
         var saltOrRouds = 10;
         this.id = id;
         this.nome = nome;
@@ -24,6 +33,12 @@ export class UsuarioEntity{
         this.email = email;
         this.telefone = telefone;
         this.senha = bcrypt.hashSync(senha, saltOrRouds);
+        this.endereco = endereco;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.estado = estado;
+        this.cep = cep;
+        this.localidade = localidade
     }
 
     trocarSenha(novaSenha: string){
